@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class SceneController : MonoBehaviour
 {
-    [SerializeField] private GameObject explosionEffectGO;
-    [SerializeField] private GameObject lightGO;
+    [SerializeField] private ParticleSystem explosionEffect;
+    [SerializeField] private Light sceneLight;
 
     public void ActivateExplosion()
     {
-        explosionEffectGO.SetActive(true);
+        explosionEffect.Play();
     }
 
     public void SwitchOffLight()
     {
-        lightGO.SetActive(false);
+        sceneLight.intensity = 0;
     }
 
     public void SwitchOnLight()
     {
-        lightGO.SetActive(true);
+        sceneLight.intensity = 1.5f;
     }
 }

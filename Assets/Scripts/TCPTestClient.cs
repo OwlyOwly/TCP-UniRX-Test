@@ -19,13 +19,6 @@ public class TCPTestClient : MonoBehaviour
     private void Start()
     {
         ConnectToTcpServer();
-
-        var clickStream = Observable.EveryUpdate()
-            .Where(_ => Input.GetMouseButtonDown(0));
-
-        clickStream.Last()
-            .Subscribe(_ => PrepareExplosionCommand());
-
     }
 
     private void ConnectToTcpServer()
@@ -49,17 +42,14 @@ public class TCPTestClient : MonoBehaviour
             socketConnection = new TcpClient("localhost", 8052);
             Byte[] bytes = new Byte[1024];
             while (true)
-            {
-                // Get a stream object for reading 				
+            {		
                 using (NetworkStream stream = socketConnection.GetStream())
                 {
-                    int length;
-                    // Read incomming stream into byte arrary. 					
+                    int length;			
                     while ((length = stream.Read(bytes, 0, bytes.Length)) != 0)
                     {
                         var incommingData = new byte[length];
-                        Array.Copy(bytes, 0, incommingData, 0, length);
-                        // Convert byte array to string message. 						
+                        Array.Copy(bytes, 0, incommingData, 0, length);					
                         string serverMessage = Encoding.ASCII.GetString(incommingData);
                         Debug.Log("server message received as: " + serverMessage);
                     }
